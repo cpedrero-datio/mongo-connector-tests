@@ -1,0 +1,16 @@
+version: '2'
+services:
+
+  mongo:
+    image: mongo:3.2
+    container_name: mongoDaas
+    ports:
+      - 27017:27017
+    command: --auth
+
+  mongo_3_4:
+      image: mongo:3.4
+      container_name: mongo_3_4
+      ports:
+        - 27017:27017
+      command: --auth
