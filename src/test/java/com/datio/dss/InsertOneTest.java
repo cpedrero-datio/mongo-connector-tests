@@ -15,7 +15,7 @@ import com.datiobd.daas.rsa.EncryptionUtil;
 
 public class InsertOneTest {
     public static final int TOTAL_DOCS = 10;
-    private static String COLLECTION_NAME = "test";
+    private static String COLLECTION_NAME = "test1";
     private static String DATABASE = "daas";
     private static String HOST = "127.0.0.1";
     private static String DATABASE_NAME = "daas";
