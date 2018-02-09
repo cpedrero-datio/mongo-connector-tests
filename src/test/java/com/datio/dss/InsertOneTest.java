@@ -35,10 +35,20 @@ public class InsertOneTest {
         }
     };
     private static DocumentWrapper documentWrapper = DocumentWrapper.parse("{\"database\" : \"daas\",\"table\" : \"clients\",\"detail\" : {\"name\" : \"Miguel\", \"age\" : 28, \"isVip\" : \"true\"}}");
-
+/*
+{
+	"database": "daas",
+	"table": "clients",
+	"detail": {
+		"name": "Miguel",
+		"age": 28,
+		"isVip": "true"
+	}
+}
+ */
     @Test
     public void test() throws Exception {
-
+        System.out.println(documentWrapper.toJson());
         //Delete all documents
         deleteAllDocuments();
         //Insert One register
@@ -48,6 +58,7 @@ public class InsertOneTest {
         Assert.assertNotNull(documentWrappers.first());
         Assert.assertEquals(documentWrappers.first().getString("database"), documentWrapper.getString("database"));
         Assert.assertEquals(documentWrappers.first().getString("table"), documentWrapper.getString("table"));
+        // Complete tests
 
     }
 
