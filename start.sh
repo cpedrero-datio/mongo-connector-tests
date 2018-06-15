@@ -6,8 +6,11 @@ MONGO_IMAGE=mongo_3_4
 echo " + Start mongoDB "$MONGO_IMAGE
 
 updateMongoStatus() {
-    mongo --quiet --nodb --eval "var conn = new Mongo();  var db = conn.getDB('local'); db.runCommand({'connectionStatus': 1,'showPrivileges': false })"
-    START_MONGO=$?
+while ! $(docker-compose logs $MONGO_IMAGE | grep -q "waiting for connections")
+do
+    sleep 1
+done
+START_MONGO=$?
 }
 
 rm -rf *.log
@@ -34,7 +37,7 @@ docker exec -i $MONGO_IMAGE mongo admin << EOF > mongo.log 2>&1
 db.createUser({'user': 'userAdmin', 'pwd': 'passAdmin', 'roles': [ { 'role': 'userAdminAnyDatabase', 'db': 'admin' } ] } );
 db.auth('userAdmin', 'passAdmin');
 use daas;
-db.createUser({'user': 'testUser', 'pwd': 'password', 'roles': [ { 'role': 'readWrite', 'db': 'daas' }, { 'role': 'dbAdmin', 'db': 'daas' }] });
+db.createUser({'user': 'testUser', 'pwd': 'password', 'roles': [ { 'role': 'readWrite', 'db': 'daas' }, { 'role': 'dbAdmin', 'db': 'daas' },  { 'role': 'clusterMonitor', 'db': 'admin' } ] });
 db.auth('testUser', 'password');
 db.test.insert({'name':'test db'});
 EOF
